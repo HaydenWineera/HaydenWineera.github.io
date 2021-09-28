@@ -4,7 +4,7 @@ let baddie;
 let hit;
 
 function setup() {
-  createCanvas(600, 400);
+  createCanvas(windowWidth, windowHeight);
   x = width / 2;
   y = height / 2;
   bY = 50;
@@ -29,6 +29,8 @@ function draw() {
   fill(cb);
   baddie = circle(bX, bY, 30);
   
+  
+
   baddieMove();
 }
 
@@ -43,8 +45,8 @@ function handleKeys() {
   if (keyIsDown(83)) {
     //s
     y += speed;
-    if (y >= 378) {
-      y = 376;
+    if (y >= height) {
+      y = y - 2;
     }
   }
   if (keyIsDown(65)) {
@@ -57,8 +59,8 @@ function handleKeys() {
   if (keyIsDown(68)) {
     //d
     x += speed;
-    if (x >= 578) {
-      x = 576;
+    if (x <= width) {
+      x = x - 2;
     }
   }
 }
@@ -76,11 +78,9 @@ function baddieMove() {
     bX -= bSpeed;
   }
 }
+
 function gameEnd() {
   if (hit) {
-    restart();
+    setup();
   }
-}
-function restart() {
-  setup();
 }
