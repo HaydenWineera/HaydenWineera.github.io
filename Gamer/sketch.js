@@ -29,7 +29,12 @@ function draw() {
   fill(cb);
   baddie = circle(bX, bY, 30);
   
-  
+  // bad guy rotates to the player and moves towards them
+  translate(bX, bY);
+  let theta = atan2(bY-y, bX-x);
+  rotate(theta);
+  fill("black");
+  baddie;
 
   baddieMove();
 }
@@ -65,18 +70,19 @@ function handleKeys() {
   }
 }
 function baddieMove() {
-  if (bY <= y + 12.5) {
-    bY += bSpeed;
-  }
-  if (bY >= y+ 12.5) {
-    bY -= bSpeed;
-  }
-  if (bX <= x + 12.5) {
-    bX += bSpeed;
-  }
-  if (bX >= x + 12.5) {
-    bX -= bSpeed;
-  }
+  // if (bY <= y + 12.5) {
+  //   bY += bSpeed;
+  // }
+  // if (bY >= y+ 12.5) {
+  //   bY -= bSpeed;
+  // }
+  // if (bX <= x + 12.5) {
+  //   bX += bSpeed;
+  // }
+  // if (bX >= x + 12.5) {
+  //   bX -= bSpeed;
+  // }
+  bSpeed = 3;
 }
 
 function gameEnd() {
