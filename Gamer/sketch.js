@@ -1,15 +1,14 @@
 let x, y, bX, bY, radius, speed, bSpeed;
 let player;
-let baddie;
+let theBaddies = [];
 let hit;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  x = width / 2;
-  y = height / 2;
-  bY = 50;
-  bX = 50;
-  radius = 15;
+  x = random(width);
+  y = random(height);
+  bY = height/2;
+  bX = width/2;
   speed = 6;
   bSpeed = 3;
 }
@@ -24,19 +23,40 @@ function draw() {
   let c = color(0, 0, 255);
   fill(c);
   player = rect(x, y, 22, 22);
-
-  let cb = color(255, 0, 0);
-  fill(cb);
-  baddie = circle(bX, bY, 30);
   
   // bad guy rotates to the player and moves towards them
   translate(bX, bY);
   let theta = atan2(bY-y, bX-x);
   rotate(theta);
   fill("black");
-  baddie;
 
+  mousePressed();
+  spawnBaddies();
+  displayBaddies();
   baddieMove();
+}
+
+function spawnBaddies() {
+  let baddie = {
+    x : random(width),
+    y : random(height),
+    dx : 3,
+    dy : -3,
+    color : "red"
+  };
+}
+
+function displayBaddies() {
+  for (let baddie of theBaddies) {
+    fill(baddie.color);
+    circle(baddie.x, baddie.y);
+  }
+}
+
+function mousePressed() {
+  for (let i = 0; i < 15; i++) {
+    spawnBaddies();
+  }
 }
 
 function handleKeys() {
@@ -70,19 +90,9 @@ function handleKeys() {
   }
 }
 function baddieMove() {
-  // if (bY <= y + 12.5) {
-  //   bY += bSpeed;
-  // }
-  // if (bY >= y+ 12.5) {
-  //   bY -= bSpeed;
-  // }
-  // if (bX <= x + 12.5) {
-  //   bX += bSpeed;
-  // }
-  // if (bX >= x + 12.5) {
-  //   bX -= bSpeed;
-  // }
-  bSpeed = 3;
+  for (let baddie of theBaddies) {
+    baddie.x += x;
+  }
 }
 
 function gameEnd() {
