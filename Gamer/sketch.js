@@ -1,4 +1,4 @@
-let x, y, bX, bY, radius, speed, bSpeed;
+let x, y, bx, by, radius, speed, bSpeed;
 let player;
 let theBaddies = [];
 let hit;
@@ -7,91 +7,95 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   x = random(width);
   y = random(height);
-  bY = height/2;
-  bX = width/2;
+  by = windowHeight/2;
+  bx = windowWidth/2;
   speed = 6;
   bSpeed = 3;
+  radius = 4;
 }
 
 function draw() {
   background(220);
   gameEnd();
 
-  hit = collideRectCircle(x, y, 23, 23, bX, bY, 30);
+  hit = collideRectCircle(x, y, 23, 23, bx, by, radius, radius);
 
   handleKeys();
   let c = color(0, 0, 255);
+  noStroke();
   fill(c);
   player = rect(x, y, 22, 22);
-  
-  // bad guy rotates to the player and moves towards them
-  translate(bX, bY);
-  let theta = atan2(bY-y, bX-x);
-  rotate(theta);
-  fill("black");
 
-  mousePressed();
-  spawnBaddies();
   displayBaddies();
   baddieMove();
 }
 
 function spawnBaddies() {
   let baddie = {
-    x : random(width),
-    y : random(height),
+    baddieX : (bx = windowWidth/2),
+    baddieY : (by = windowHeight/2),
     dx : 3,
     dy : -3,
-    color : "red"
+    color : ("red"),
   };
+  theBaddies.push(baddie);
 }
 
 function displayBaddies() {
   for (let baddie of theBaddies) {
+    stroke(255);
     fill(baddie.color);
-    circle(baddie.x, baddie.y);
+    circle(baddie.baddieX, baddie.baddieY, radius*2);
   }
 }
 
 function mousePressed() {
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 10; i++) {
     spawnBaddies();
   }
 }
 
 function handleKeys() {
   if (keyIsDown(87)) {
-    // w
-    y -= speed;
-    if (y <= 0) {
-      y = 2;
+    //w
+      if (y + -2 > 0) {
+        y -= speed;
+      }
     }
-  }
-  if (keyIsDown(83)) {
+    if (keyIsDown(83)) {
     //s
-    y += speed;
-    if (y >= height) {
-      y = y - 2;
+      if (y + 26 < height) {
+          y += speed;
+        }
+      }
+    if (keyIsDown(65)) {
+      //a
+      if (x + -2 > 0) {
+          x -= speed;
+        }
+      }
+    if (keyIsDown(68)) {
+      //d
+      if (x + 26 < width) {
+          x += speed;
+        }
+      }
     }
-  }
-  if (keyIsDown(65)) {
-    //a
-    x -= speed;
-    if (x <= 2) {
-      x = 2;
-    }
-  }
-  if (keyIsDown(68)) {
-    //d
-    x += speed;
-    if (x <= width) {
-      x = x - 2;
-    }
-  }
-}
 function baddieMove() {
   for (let baddie of theBaddies) {
-    baddie.x += x;
+    if (baddie.x < x) {
+      baddie.x += 1;
+    }
+    if (baddie.x > x) {
+      baddie.x -= 1;
+    }
+    if (baddie.y < y) {
+      baddie.y += 1;
+    } 
+    if (baddie.y > y) {
+      baddie.y -= 1;
+    }
+    console.log(bx, by, x, y);
   }
 }
 
