@@ -32,11 +32,11 @@ function draw() {
 
 function spawnBaddies() {
   let baddie = {
-    baddieX : (bx = windowWidth/2),
-    baddieY : (by = windowHeight/2),
+    baddieX : bx = windowWidth/2,
+    baddieY : by = windowHeight/2,
     dx : 3,
     dy : -3,
-    color : ("red"),
+    color : "red",
   };
   theBaddies.push(baddie);
 }
@@ -58,29 +58,29 @@ function mousePressed() {
 function handleKeys() {
   if (keyIsDown(87)) {
     //w
-      if (y + -2 > 0) {
-        y -= speed;
-      }
+    if (y + -2 > 0) {
+      y -= speed;
     }
-    if (keyIsDown(83)) {
+  }
+  if (keyIsDown(83)) {
     //s
-      if (y + 26 < height) {
-          y += speed;
-        }
-      }
-    if (keyIsDown(65)) {
-      //a
-      if (x + -2 > 0) {
-          x -= speed;
-        }
-      }
-    if (keyIsDown(68)) {
-      //d
-      if (x + 26 < width) {
-          x += speed;
-        }
-      }
+    if (y + 26 < height) {
+      y += speed;
     }
+  }
+  if (keyIsDown(65)) {
+    //a
+    if (x + -2 > 0) {
+      x -= speed;
+    }
+  }
+  if (keyIsDown(68)) {
+    //d
+    if (x + 26 < width) {
+      x += speed;
+    }
+  }
+}
 function baddieMove() {
   for (let baddie of theBaddies) {
     if (baddie.x < x) {
