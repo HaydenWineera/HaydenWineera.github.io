@@ -83,17 +83,17 @@ function handleKeys() {
 }
 function baddieMove() {
   for (let baddie of theBaddies) {
-    if (baddie.x < x) {
-      baddie.x += 1;
+    if (baddie.baddieX < x) {
+      baddie.baddieX += 1;
     }
-    if (baddie.x > x) {
-      baddie.x -= 1;
+    if (baddie.baddieX > x) {
+      baddie.baddieX -= 1;
     }
-    if (baddie.y < y) {
-      baddie.y += 1;
+    if (baddie.baddieY < y) {
+      baddie.baddieY += 1;
     } 
-    if (baddie.y > y) {
-      baddie.y -= 1;
+    if (baddie.baddieY > y) {
+      baddie.baddieY -= 1;
     }
     console.log(bx, by, x, y);
   }
