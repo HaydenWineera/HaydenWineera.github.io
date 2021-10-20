@@ -8,15 +8,19 @@ let cellWidth, cellHeight;
 let level;
 let playerX = 0;
 let playerY = 0;
+let bx = 0;
+let by = 0;
+let baddie;
+let badran;
 
 function preload() {
   level = loadJSON("assets/level1.json");// assumes gridsize is 25
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(800, 800);
   grid = level;
-  cellWidth = width/gridSize - 5;
+  cellWidth = width/gridSize;
   cellHeight = height/gridSize;
 
   // put player in grid
@@ -84,6 +88,9 @@ function displayGrid() {
       }
       if (grid[y][x] === 9) {
         fill("red");
+      }
+      if (grid[y][x] === 8) {
+        fill ("grey");
       }
       rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
     }
