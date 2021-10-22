@@ -74,6 +74,9 @@ function mousePressed() {
   else if (grid[cellY][cellX] === 1) {
     grid[cellY][cellX] = 0;
   }
+  else if (grid[cellY][cellX] === 9) {
+    grid[cellY][cellX] = 0;
+  }
 }
 
 function displayGrid() {
@@ -83,14 +86,41 @@ function displayGrid() {
       if (grid[y][x] === 0) {
         fill("white");
       }
+      //soil
       if (grid[y][x] === 1) {
-        fill("black");
+        fill(141, 68, 20);
       }
-      if (grid[y][x] === 9) {
+      //harder soil
+      if (grid[y][x] === 2) {
+        fill(104, 45, 6);
+      }
+      //hardest soil
+      if (grid[y][x] === 3) {
+        fill (67, 39, 21);
+      }
+      //player
+      if (grid[y][x] === 14) {
         fill("red");
       }
-      if (grid[y][x] === 8) {
+      //stone
+      if (grid[y][x] === 4) {
         fill ("grey");
+      }
+      //copper
+      if (grid[y][x] === 5) {
+        fill (204, 102, 0);
+      }
+      //grass
+      if (grid[y][x] === 3) {
+        fill (0, 153, 0);
+      }
+      //gold
+      if (grid[y][x] === 6) {
+        fill(233, 179, 0);
+      }
+      //daimond
+      if (grid[y][x] === 7) {
+        fill(0, 255, 255);
       }
       rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
     }
