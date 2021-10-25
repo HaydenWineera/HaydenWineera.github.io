@@ -36,9 +36,6 @@ function keyPressed() {
   if (key === "e") {
     grid = createEmpty2DArray(gridSize, gridSize);
   }
-  if (key === "r") {
-    grid = createRandom2DArray(gridSize, gridSize);
-  }
   else if (key === "s") {
     tryToMoveTo(playerX, playerY+1);
   }
@@ -75,12 +72,12 @@ function mousePressed() {
     grid[cellY][cellX] = 0;
   }
   else if (grid[cellY][cellX] === 9) {
-    grid[cellY][cellX] = 0;
+    grid[cellY][cellX] = 9;
   }
 }
 
 function displayGrid() {
-  stroke(0);
+  noStroke(255);
   for (let y=0; y<gridSize; y++) {
     for (let x=0; x<gridSize; x++) {
       if (grid[y][x] === 0) {
@@ -99,7 +96,7 @@ function displayGrid() {
         fill (67, 39, 21);
       }
       //player
-      if (grid[y][x] === 14) {
+      if (grid[y][x] === 9) {
         fill("red");
       }
       //stone
@@ -122,6 +119,10 @@ function displayGrid() {
       if (grid[y][x] === 7) {
         fill(0, 255, 255);
       }
+      //merchant
+      if (grid[y][x] === 12) {
+        fill(164, 66, 245);
+      }
       rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
     }
   }
@@ -133,22 +134,6 @@ function createEmpty2DArray(rows, cols) {
     board.push([]);
     for (let x=0; x<cols; x++) {
       board[y].push(0);
-    }
-  }
-  return board;
-}
-
-function createRandom2DArray(rows, cols) {
-  let board = [];
-  for (let y=0; y<rows; y++) {
-    board.push([]);
-    for (let x=0; x<cols; x++) {
-      if (random(100) < 50) {
-        board[y].push(0);
-      }
-      else {
-        board[y].push(1);
-      }
     }
   }
   return board;
