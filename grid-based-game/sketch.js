@@ -30,13 +30,11 @@ function setup() {
 function draw() {
   background(220);
   displayGrid();
+  gravitization();
 }
 
 function keyPressed() {
-  if (key === "e") {
-    grid = createEmpty2DArray(gridSize, gridSize);
-  }
-  else if (key === "s") {
+  if (key === "s") {
     tryToMoveTo(playerX, playerY+1);
   }
   else if (key === "w") {
@@ -48,11 +46,34 @@ function keyPressed() {
   else if (key === "d") {
     tryToMoveTo(playerX+1, playerY);
   }
+  else if (keyCode === DOWN_ARROW) {
+    if (grid[playerY+1][playerX] === 1) {
+      grid[playerY+1][playerX] = 0;
+      console.log("digging!");
+    }
+  }
+  else if (keyCode === UP_ARROW) {
+    if (grid[playerY-1][playerX] === 1) {
+      grid[playerY-1][playerX] = 0;
+      console.log("digging!");
+  }
+  else if (keyCode === RIGHT_ARROW) {
+    if (grid[playerY][playerX-1] === 1) {
+      grid[playerY][playerX-1] = 0;
+      console.log("digging!");
+  }
+  else if (keyCode === RIGHT_ARROW) {
+    if (grid[playerY][playerX+1] === 1) {
+      grid[playerY][playerX+1] = 0;
+      console.log("digging!");
+      }
+    }
+  }
 }
 
 function tryToMoveTo(newX, newY) {
   if (newX >= 0 && newY >= 0 && newX < gridSize && newY < gridSize) {
-    if (grid[newY][newX] === 0) { //if new spot is empty
+    if (grid[newY][newX] === 0) { //if block is too strong (we'll get to this later)
       grid[playerY][playerX] = 0;
       playerX = newX;
       playerY = newY;
@@ -60,6 +81,17 @@ function tryToMoveTo(newX, newY) {
     }
   }
 }
+
+function gravitization() {
+  grid[playerY-1];
+}
+// function dig(newX, newY){
+//   if (newX >= 0 && newY >= 0 && newX < gridSize && newY < gridSize) {
+//     if (grid[newY][newX] === 1) {
+//       console.log("digging!");
+//     }
+//   }
+// }
 
 function mousePressed() {
   let cellX = Math.floor(mouseX/cellWidth);
@@ -126,15 +158,4 @@ function displayGrid() {
       rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
     }
   }
-}
-
-function createEmpty2DArray(rows, cols) {
-  let board = [];
-  for (let y=0; y<rows; y++) {
-    board.push([]);
-    for (let x=0; x<cols; x++) {
-      board[y].push(0);
-    }
-  }
-  return board;
 }
