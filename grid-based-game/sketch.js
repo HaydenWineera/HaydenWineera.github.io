@@ -57,17 +57,17 @@ function keyPressed() {
       grid[playerY-1][playerX] = 0;
       console.log("digging!");
     }
-    else if (keyCode === RIGHT_ARROW) {
-      if (grid[playerY][playerX-1] === 1) {
-        grid[playerY][playerX-1] = 0;
-        console.log("digging!");
-      }
-      else if (keyCode === RIGHT_ARROW) {
-        if (grid[playerY][playerX+1] === 1) {
-          grid[playerY][playerX+1] = 0;
-          console.log("digging!");
-        }
-      }
+  }
+  else if (keyCode === RIGHT_ARROW) {
+    if (grid[playerY][playerX+1] === 1) {
+      grid[playerY][playerX+1] = 0;
+      console.log("digging!");
+    }
+  }
+  else if (keyCode === LEFT_ARROW) {
+    if (grid[playerY][playerX-1] === 1) {
+      grid[playerY][playerX-1] = 0;
+      console.log("digging!");
     }
   }
 }
