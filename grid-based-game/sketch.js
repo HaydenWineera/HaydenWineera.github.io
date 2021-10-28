@@ -30,7 +30,7 @@ function setup() {
 function draw() {
   background(220);
   displayGrid();
-  gravitization();
+  // gravitization();
 }
 
 function keyPressed() {
@@ -84,15 +84,8 @@ function tryToMoveTo(newX, newY) {
 }
 
 function gravitization() {
-  grid[playerY-1];
+  tryToMoveTo(playerY+1, playerX);
 }
-// function dig(newX, newY){
-//   if (newX >= 0 && newY >= 0 && newX < gridSize && newY < gridSize) {
-//     if (grid[newY][newX] === 1) {
-//       console.log("digging!");
-//     }
-//   }
-// }
 
 function mousePressed() {
   let cellX = Math.floor(mouseX/cellWidth);
