@@ -10,11 +10,12 @@ let playerX = 0;
 let playerY = 0;
 let bx = 0;
 let by = 0;
-let baddie;
+let ladder;
 let badran;
 
 function preload() {
   level = loadJSON("assets/level1.json");// assumes gridsize is 25
+  ladder = loadImage("assets/ladder.png");
 }
 
 function setup() {
@@ -46,28 +47,28 @@ function keyPressed() {
   else if (key === "d") {
     tryToMoveTo(playerX+1, playerY);
   }
+  else if (key === " ") {
+    grid[playerY-1, playerX === 13];
+    console.log("placing ladder");
+  }
   else if (keyCode === DOWN_ARROW) {
     if (grid[playerY+1][playerX] === 1) {
       grid[playerY+1][playerX] = 0;
-      console.log("digging!");
     }
   }
   else if (keyCode === UP_ARROW) {
     if (grid[playerY-1][playerX] === 1) {
       grid[playerY-1][playerX] = 0;
-      console.log("digging!");
     }
   }
   else if (keyCode === RIGHT_ARROW) {
     if (grid[playerY][playerX+1] === 1) {
       grid[playerY][playerX+1] = 0;
-      console.log("digging!");
     }
   }
   else if (keyCode === LEFT_ARROW) {
     if (grid[playerY][playerX-1] === 1) {
       grid[playerY][playerX-1] = 0;
-      console.log("digging!");
     }
   }
 }
@@ -108,48 +109,61 @@ function displayGrid() {
     for (let x=0; x<gridSize; x++) {
       if (grid[y][x] === 0) {
         fill("white");
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //soil
       if (grid[y][x] === 1) {
         fill(141, 68, 20);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //harder soil
       if (grid[y][x] === 2) {
         fill(104, 45, 6);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //hardest soil
       if (grid[y][x] === 3) {
         fill (67, 39, 21);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //player
       if (grid[y][x] === 9) {
         fill("red");
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //stone
       if (grid[y][x] === 4) {
         fill ("grey");
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //copper
       if (grid[y][x] === 5) {
         fill (204, 102, 0);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //grass
       if (grid[y][x] === 3) {
         fill (0, 153, 0);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //gold
       if (grid[y][x] === 6) {
         fill(233, 179, 0);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //daimond
       if (grid[y][x] === 7) {
         fill(0, 255, 255);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //merchant
       if (grid[y][x] === 12) {
         fill(164, 66, 245);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
-      rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
+      if (grid[y][x] === 13) {
+        ladder(playerY-1, playerX);
+      }
     }
   }
 }
