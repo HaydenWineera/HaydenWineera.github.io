@@ -1,6 +1,6 @@
 // grid based game
 // Hayden Wineera
-// Date: *CURRENT DATE*
+// Date: November 1st
 
 let grid;
 let gridSize = 25;
@@ -30,8 +30,8 @@ function setup() {
 
 function draw() {
   background(220);
-  displayGrid();
   // gravitization();
+  displayGrid();
 }
 
 function keyPressed() {
@@ -48,7 +48,7 @@ function keyPressed() {
     tryToMoveTo(playerX+1, playerY);
   }
   else if (key === " ") {
-    grid[playerY-1, playerX === 13];
+    grid[playerY-1][playerX] = 13;
     console.log("placing ladder");
   }
   else if (keyCode === DOWN_ARROW) {
@@ -75,7 +75,13 @@ function keyPressed() {
 
 function tryToMoveTo(newX, newY) {
   if (newX >= 0 && newY >= 0 && newX < gridSize && newY < gridSize) {
-    if (grid[newY][newX] === 0) { //if block is too strong (we'll get to this later)
+    if (grid[newY][newX] === 0) { //if block is in the way(excluding ladders)
+      grid[playerY][playerX] = 0;
+      playerX = newX;
+      playerY = newY;
+      grid[playerY][playerX] = 9;
+    }
+    else if (grid[newY][newX] === 13) {
       grid[playerY][playerX] = 0;
       playerX = newX;
       playerY = newY;
@@ -85,21 +91,23 @@ function tryToMoveTo(newX, newY) {
 }
 
 function gravitization() {
-  tryToMoveTo(playerY+1, playerX);
+  tryToMoveTo(playerY-1, playerX);
 }
 
 function mousePressed() {
   let cellX = Math.floor(mouseX/cellWidth);
   let cellY = Math.floor(mouseY/cellHeight);
 
-  if (grid[cellY][cellX] === 0) {
-    grid[cellY][cellX] = 1;
-  }
-  else if (grid[cellY][cellX] === 1) {
-    grid[cellY][cellX] = 0;
-  }
-  else if (grid[cellY][cellX] === 9) {
-    grid[cellY][cellX] = 9;
+  if(mouseX >= 0 && mouseX < gridSize && mouseY >= 0 && mouseY < gridSize) {
+    if (grid[cellY][cellX] === 0) {
+      grid[cellY][cellX] = 1;
+    }
+    else if (grid[cellY][cellX] === 1) {
+      grid[cellY][cellX] = 0;
+    }
+    else if (grid[cellY][cellX] === 9) {
+      grid[cellY][cellX] = 9;
+    }
   }
 }
 
@@ -162,7 +170,7 @@ function displayGrid() {
         rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       if (grid[y][x] === 13) {
-        ladder(playerY-1, playerX);
+        image(ladder, x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
     }
   }

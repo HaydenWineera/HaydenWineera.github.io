@@ -33,7 +33,7 @@ class Ball {
     this.y = y;
     this.dx = random(-5, 5);
     this.dy = random(-5, 5);
-    this.theColor = color(random(255), random(255), random(255), random(255));
+    this.theColor = color(random(255), random(255), random(255));
   }
 
   display() {
@@ -54,10 +54,29 @@ class Ball {
       this.dy *= -1;
     }
   }
+
+  isPointInBall(x, y) {
+    if (dist(x, y, this.x, this.y) < this.radius) {
+      //inside ball
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
 
+
 function mousePressed() {
-  for(let i=0; i<1000; i++) {
+  for (let i= ballArray.length-1; i >= 0; i--) {
+    if (ballArray[i].isPointInBall(mouseX, mouseY)) {
+      ballArray.splice(i, 1);
+    }
+  }
+}
+  
+function keyPressed() {
+  if (key === " ") {
     let theBall = new Ball(mouseX, mouseY);
     ballArray.push(theBall);
   }
