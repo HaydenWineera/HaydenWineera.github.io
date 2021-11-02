@@ -11,7 +11,6 @@ let playerY = 0;
 let bx = 0;
 let by = 0;
 let ladder;
-let badran;
 
 function preload() {
   level = loadJSON("assets/level1.json");// assumes gridsize is 25
@@ -49,7 +48,6 @@ function keyPressed() {
   }
   else if (key === " ") {
     grid[playerY-1][playerX] = 13;
-    console.log("placing ladder");
   }
   else if (keyCode === DOWN_ARROW) {
     if (grid[playerY+1][playerX] === 1) {
@@ -98,11 +96,23 @@ function mousePressed() {
   let cellX = Math.floor(mouseX/cellWidth);
   let cellY = Math.floor(mouseY/cellHeight);
 
-  if(mouseX >= 0 && mouseX < gridSize && mouseY >= 0 && mouseY < gridSize) {
+  if(mouseX >= 0 && mouseX < 800 && mouseY >= 0 && mouseY < 800) {
     if (grid[cellY][cellX] === 0) {
       grid[cellY][cellX] = 1;
     }
     else if (grid[cellY][cellX] === 1) {
+      grid[cellY][cellX] = 4;
+    }
+    else if (grid[cellY][cellX] === 4) {
+      grid[cellY][cellX] = 3;
+    }
+    else if (grid[cellY][cellX] === 3) {
+      grid[cellY][cellX] = 5;
+    }
+    else if (grid[cellY][cellX] === 5) {
+      grid[cellY][cellX] = 2;
+    }
+    else if (grid[cellY][cellX] === 2) {
       grid[cellY][cellX] = 0;
     }
     else if (grid[cellY][cellX] === 9) {
