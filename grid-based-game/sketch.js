@@ -11,6 +11,7 @@ let playerY = 0;
 let bx = 0;
 let by = 0;
 let ladder;
+let s;
 
 function preload() {
   level = loadJSON("assets/level1.json");// assumes gridsize is 25
@@ -28,9 +29,13 @@ function setup() {
 }
 
 function draw() {
-  background(220);
+  background(255);
   // gravitization();
+  noStroke();
+  fill(104, 45, 6);
+  rect(0, 160, 800, 700);
   displayGrid();
+  displayText();
 }
 
 function keyPressed() {
@@ -49,23 +54,27 @@ function keyPressed() {
   else if (key === " ") {
     grid[playerY-1][playerX] = 13;
   }
+  else if (keyCode === ENTER) {
+    console.log("bruh");
+    let s = "use WASD to move your character [ENTER]";
+  }
   else if (keyCode === DOWN_ARROW) {
-    if (grid[playerY+1][playerX] === 1) {
+    if (grid[playerY+1][playerX] === 1 || grid[playerY+1][playerX] === 3) {
       grid[playerY+1][playerX] = 0;
     }
   }
   else if (keyCode === UP_ARROW) {
-    if (grid[playerY-1][playerX] === 1) {
+    if (grid[playerY-1][playerX] === 1 || grid[playerY-1][playerX] === 3) {
       grid[playerY-1][playerX] = 0;
     }
   }
   else if (keyCode === RIGHT_ARROW) {
-    if (grid[playerY][playerX+1] === 1) {
+    if (grid[playerY][playerX+1] === 1 || grid[playerY][playerX+1] === 3) {
       grid[playerY][playerX+1] = 0;
     }
   }
   else if (keyCode === LEFT_ARROW) {
-    if (grid[playerY][playerX-1] === 1) {
+    if (grid[playerY][playerX-1] === 1 || grid[playerY][playerX-1] === 3) {
       grid[playerY][playerX-1] = 0;
     }
   }
@@ -73,13 +82,19 @@ function keyPressed() {
 
 function tryToMoveTo(newX, newY) {
   if (newX >= 0 && newY >= 0 && newX < gridSize && newY < gridSize) {
-    if (grid[newY][newX] === 0) { //if block is in the way(excluding ladders)
+    if (grid[newY][newX] === 0) { //if block is in the way(excluding ladders and backsoil)
       grid[playerY][playerX] = 0;
       playerX = newX;
       playerY = newY;
       grid[playerY][playerX] = 9;
     }
     else if (grid[newY][newX] === 13) {
+      grid[playerY][playerX] = 0;
+      playerX = newX;
+      playerY = newY;
+      grid[playerY][playerX] = 9;
+    }
+    else if (grid[newY][newX] === 2) {
       grid[playerY][playerX] = 0;
       playerX = newX;
       playerY = newY;
@@ -125,21 +140,17 @@ function displayGrid() {
   noStroke(255);
   for (let y=0; y<gridSize; y++) {
     for (let x=0; x<gridSize; x++) {
-      if (grid[y][x] === 0) {
-        fill("white");
-        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
-      }
       //soil
       if (grid[y][x] === 1) {
         fill(141, 68, 20);
         rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
-      //harder soil
+      //backdrop soil
       if (grid[y][x] === 2) {
         fill(104, 45, 6);
         rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
-      //hardest soil
+      //hard stone
       if (grid[y][x] === 3) {
         fill (67, 39, 21);
         rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
@@ -184,4 +195,11 @@ function displayGrid() {
       }
     }
   }
+}
+
+function displayText() {
+  // text("Welcome new explorer", 700, 100);
+  s = "Welcome new explorer [ENTER]";
+  fill(50);
+  text(s, 730, 60, 70, 80);
 }
