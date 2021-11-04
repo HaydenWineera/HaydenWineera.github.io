@@ -11,7 +11,9 @@ let playerY = 0;
 let bx = 0;
 let by = 0;
 let ladder;
-let s;
+let message = "Welcome new explorer [ENTER]";
+let textState = 0;
+
 
 function preload() {
   level = loadJSON("assets/level1.json");// assumes gridsize is 25
@@ -29,7 +31,7 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(66, 179, 245);
   // gravitization();
   noStroke();
   fill(104, 45, 6);
@@ -54,27 +56,39 @@ function keyPressed() {
   else if (key === " ") {
     grid[playerY-1][playerX] = 13;
   }
-  else if (keyCode === ENTER) {
-    console.log("bruh");
-    let s = "use WASD to move your character [ENTER]";
+  else if (keyCode === ENTER && textState === 0) {
+    message = "use WASD to move your character [ENTER]";
+    textState += 1;
+  }
+  else if (keyCode === ENTER && textState === 1) {
+    message = "use your arrow keys to dig [ENTER]";
+    textState += 1;
+  }
+  else if (keyCode === ENTER && textState === 2) {
+    message = "I'm the merchant [ENTER]";
+    textState += 1;
+  }
+  else if (keyCode === ENTER && textState === 3) {
+    message = "If you need to upgrade talk to me";
+    textState += 1;
   }
   else if (keyCode === DOWN_ARROW) {
-    if (grid[playerY+1][playerX] === 1 || grid[playerY+1][playerX] === 3) {
+    if (grid[playerY+1][playerX] === 1 || grid[playerY+1][playerX] === 3 || grid[playerY+1][playerX] === 5) {
       grid[playerY+1][playerX] = 0;
     }
   }
   else if (keyCode === UP_ARROW) {
-    if (grid[playerY-1][playerX] === 1 || grid[playerY-1][playerX] === 3) {
+    if (grid[playerY-1][playerX] === 1 || grid[playerY-1][playerX] === 3 || grid[playerY+1][playerX] === 5) {
       grid[playerY-1][playerX] = 0;
     }
   }
   else if (keyCode === RIGHT_ARROW) {
-    if (grid[playerY][playerX+1] === 1 || grid[playerY][playerX+1] === 3) {
+    if (grid[playerY][playerX+1] === 1 || grid[playerY][playerX+1] === 3 || grid[playerY+1][playerX] === 5) {
       grid[playerY][playerX+1] = 0;
     }
   }
   else if (keyCode === LEFT_ARROW) {
-    if (grid[playerY][playerX-1] === 1 || grid[playerY][playerX-1] === 3) {
+    if (grid[playerY][playerX-1] === 1 || grid[playerY][playerX-1] === 3 || grid[playerY+1][playerX] === 5) {
       grid[playerY][playerX-1] = 0;
     }
   }
@@ -89,12 +103,6 @@ function tryToMoveTo(newX, newY) {
       grid[playerY][playerX] = 9;
     }
     else if (grid[newY][newX] === 13) {
-      grid[playerY][playerX] = 0;
-      playerX = newX;
-      playerY = newY;
-      grid[playerY][playerX] = 9;
-    }
-    else if (grid[newY][newX] === 2) {
       grid[playerY][playerX] = 0;
       playerX = newX;
       playerY = newY;
@@ -145,14 +153,9 @@ function displayGrid() {
         fill(141, 68, 20);
         rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
-      //backdrop soil
-      if (grid[y][x] === 2) {
-        fill(104, 45, 6);
-        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
-      }
       //hard stone
       if (grid[y][x] === 3) {
-        fill (67, 39, 21);
+        fill (73, 85, 92);
         rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
       //player
@@ -199,7 +202,6 @@ function displayGrid() {
 
 function displayText() {
   // text("Welcome new explorer", 700, 100);
-  s = "Welcome new explorer [ENTER]";
   fill(50);
-  text(s, 730, 60, 70, 80);
+  text(message, 730, 60, 70, 80);
 }
