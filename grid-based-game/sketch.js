@@ -13,6 +13,8 @@ let by = 0;
 let ladder;
 let message = "Welcome new explorer [ENTER]";
 let textState = 0;
+let moola = 0;
+let money = "Money = " + moola;
 
 
 function preload() {
@@ -74,24 +76,33 @@ function keyPressed() {
   }
   else if (keyCode === DOWN_ARROW) {
     if (grid[playerY+1][playerX] === 1 || grid[playerY+1][playerX] === 3 || grid[playerY+1][playerX] === 5) {
-      grid[playerY+1][playerX] = 0;
+      dig(playerX, playerY+1);
     }
   }
   else if (keyCode === UP_ARROW) {
-    if (grid[playerY-1][playerX] === 1 || grid[playerY-1][playerX] === 3 || grid[playerY+1][playerX] === 5) {
-      grid[playerY-1][playerX] = 0;
+    if (grid[playerY-1][playerX] === 1 || grid[playerY-1][playerX] === 3 || grid[playerY-1][playerX] === 5) {
+      // grid[playerY-1][playerX] = 0;
+      dig(playerX, playerY-1);
     }
   }
   else if (keyCode === RIGHT_ARROW) {
-    if (grid[playerY][playerX+1] === 1 || grid[playerY][playerX+1] === 3 || grid[playerY+1][playerX] === 5) {
-      grid[playerY][playerX+1] = 0;
+    if (grid[playerY][playerX+1] === 1 || grid[playerY][playerX+1] === 3 || grid[playerY][playerX+1] === 5) {
+      // grid[playerY][playerX+1] = 0;
+      dig(playerX+1, playerY);
     }
   }
   else if (keyCode === LEFT_ARROW) {
-    if (grid[playerY][playerX-1] === 1 || grid[playerY][playerX-1] === 3 || grid[playerY+1][playerX] === 5) {
-      grid[playerY][playerX-1] = 0;
+    if (grid[playerY][playerX-1] === 1 || grid[playerY][playerX-1] === 3 || grid[playerY][playerX-1] === 5) {
+      // grid[playerY][playerX-1] = 0;
     }
   }
+}
+
+function dig(x, y) {
+  if (grid[y][x] === 5) {
+    moola += 100;
+  }
+  grid[y][x] = 0;
 }
 
 function tryToMoveTo(newX, newY) {
@@ -204,4 +215,6 @@ function displayText() {
   // text("Welcome new explorer", 700, 100);
   fill(50);
   text(message, 730, 60, 70, 80);
+
+  text(money, 100, 25, 70, 80);
 }
