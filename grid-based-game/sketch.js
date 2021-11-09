@@ -94,6 +94,7 @@ function keyPressed() {
   else if (keyCode === LEFT_ARROW) {
     if (grid[playerY][playerX-1] === 1 || grid[playerY][playerX-1] === 3 || grid[playerY][playerX-1] === 5) {
       // grid[playerY][playerX-1] = 0;
+      dig(playerX-1, playerY);
     }
   }
 }
